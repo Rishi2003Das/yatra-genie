@@ -17,6 +17,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { TripDetails } from '@/services/api';
+import { DateRange } from 'react-day-picker';
 
 const interestItems = [
   { id: "adventure", label: "Adventure" },
@@ -59,7 +60,7 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
       dateRange: {
         from: undefined,
         to: undefined,
-      },
+      } as DateRange,
       budget: 20000,
       purpose: "",
       interests: [],
@@ -130,12 +131,12 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
                             variant={"outline"}
                             className={cn(
                               "w-full justify-start text-left font-normal",
-                              !field.value.from && "text-muted-foreground"
+                              !field.value?.from && "text-muted-foreground"
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {field.value.from ? (
-                              field.value.to ? (
+                            {field.value?.from ? (
+                              field.value?.to ? (
                                 <>
                                   {format(field.value.from, "PPP")} - {format(field.value.to, "PPP")}
                                 </>
@@ -151,7 +152,7 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="range"
-                          selected={field.value}
+                          selected={field.value as DateRange}
                           onSelect={field.onChange}
                           initialFocus
                         />
